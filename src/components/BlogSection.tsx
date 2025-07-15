@@ -1,56 +1,4 @@
-interface BlogPost {
-  id: string
-  title: string
-  excerpt: string
-  author: string
-  date: string
-  readTime: string
-  category: string
-  image: string
-}
-
-const blogPosts: BlogPost[] = [
-  {
-    id: '1',
-    title: '5 Steps to Discover Your Ikigai in 2024',
-    excerpt: 'Learn the proven framework used by millions to find their life purpose and create lasting fulfillment.',
-    author: 'Dr. Sarah Chen',
-    date: 'Jan 15, 2024',
-    readTime: '5 min read',
-    category: 'Personal Development',
-    image: '/api/placeholder/400/250'
-  },
-  {
-    id: '2',
-    title: 'The Science Behind Japanese Longevity',
-    excerpt: 'Discover how ikigai principles contribute to the remarkable longevity of Okinawan centenarians.',
-    author: 'Prof. Michael Tanaka',
-    date: 'Jan 12, 2024',
-    readTime: '7 min read',
-    category: 'Wellness',
-    image: '/api/placeholder/400/250'
-  },
-  {
-    id: '3',
-    title: 'From Burnout to Purpose: A Personal Journey',
-    excerpt: 'One woman\'s transformative journey from corporate burnout to finding her true calling.',
-    author: 'Emma Rodriguez',
-    date: 'Jan 10, 2024',
-    readTime: '4 min read',
-    category: 'Success Stories',
-    image: '/api/placeholder/400/250'
-  },
-  {
-    id: '4',
-    title: 'Ikigai vs. Western Goal Setting: What Works Better?',
-    excerpt: 'Comparing traditional goal-setting methods with the Japanese philosophy of purpose-driven living.',
-    author: 'Dr. James Wilson',
-    date: 'Jan 8, 2024',
-    readTime: '6 min read',
-    category: 'Philosophy',
-    image: '/api/placeholder/400/250'
-  }
-]
+import { blogPosts } from '@/data/blogPosts'
 
 export default function BlogSection() {
   return (
@@ -65,14 +13,29 @@ export default function BlogSection() {
           </p>
         </div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogPosts.map((post) => (
             <article key={post.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
-              <div className="h-48 bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center">
+              <div className="h-48 bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center relative">
                 <div className="text-white text-center">
                   <div className="text-4xl mb-2">📝</div>
                   <div className="text-sm opacity-90">{post.category}</div>
                 </div>
+                {post.youtubeUrl && (
+                  <div className="absolute top-2 right-2">
+                    <a 
+                      href={post.youtubeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-red-600 hover:bg-red-700 text-white p-2 rounded-full transition-colors duration-200"
+                      title="Watch on YouTube"
+                    >
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                      </svg>
+                    </a>
+                  </div>
+                )}
               </div>
               
               <div className="p-6">
@@ -91,6 +54,14 @@ export default function BlogSection() {
                   {post.excerpt}
                 </p>
                 
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {post.tags.slice(0, 3).map((tag) => (
+                    <span key={tag} className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+                
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
                     <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">
@@ -102,9 +73,21 @@ export default function BlogSection() {
                     </div>
                   </div>
                   
-                  <button className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors duration-200">
-                    Read More →
-                  </button>
+                  <div className="flex space-x-2">
+                    <button className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors duration-200">
+                      Read More →
+                    </button>
+                    {post.youtubeUrl && (
+                      <a 
+                        href={post.youtubeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-red-600 hover:text-red-800 font-medium text-sm transition-colors duration-200"
+                      >
+                        Watch →
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             </article>
