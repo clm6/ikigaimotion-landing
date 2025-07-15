@@ -16,9 +16,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <meta name='impact-site-verification' value='aba57c2c-bccb-499d-a353-dc98bbdf722f' />
-      </head>
       <body className={inter.className}>{children}</body>
     </html>
   )
